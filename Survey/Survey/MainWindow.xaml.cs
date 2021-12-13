@@ -11,6 +11,7 @@ namespace Survey
     {
         private List<string> questions = new();
         private ObservableCollection<User> users;
+        
 
         public MainWindow()
         {
@@ -39,6 +40,12 @@ namespace Survey
 
             users = await RandomUsers.GetUsers(100);
             //randomusers.ItemsSource = users;
+        }
+
+        private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+            //var questionsFromDb =  await SurveyModel.GetQuestions();
+
         }
     }
 }

@@ -14,7 +14,99 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
+    
+    
     <Grid>
+        <!--#region main layout-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!--#endregion-->
+        
+        <!--#region flipper front-->
+        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged">
+            <materialDesign:Flipper.FrontContent>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                <!--main left-->        
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Margin="50,0">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  Margin="0,15">
+                            <TextBox Style="{StaticResource MaterialDesignTextBox}" materialDesign:HintAssist.Hint="First Name" Width="200" Margin="0,15"/>
+                            <TextBox Style="{StaticResource MaterialDesignTextBox}" materialDesign:HintAssist.Hint="Last Name" Width="200" Margin="0,15"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBlock Text="Gender: "  VerticalAlignment="Center" Style="{StaticResource MaterialDesignTextBlock}" />
+                            <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="Gender" Content="Male" />
+                            <RadioButton Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="Gender" Content="Female" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  Margin="0,15">
+                            <TextBox Style="{StaticResource MaterialDesignTextBox}" materialDesign:HintAssist.Hint="Email Address" Width="200"/>
+                        </StackPanel>
+                </StackPanel>
+                <!--main right-->
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="50,0">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15" >
+                            <TextBlock Text="Age Group: "  VerticalAlignment="Center" Style="{StaticResource MaterialDesignTextBlock}" Margin="0,15"/>
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="18-24 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="25-34 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="35-44 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="45-54 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="55-64 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="65-74 years old" />
+                            <RadioButton Style="{StaticResource MaterialDesignLightRadioButton}" GroupName="AgeGroup" Content="75 years or older" />
+                        </StackPanel>
 
+                        <StackPanel HorizontalAlignment="Right">
+                            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="8" Width="120" Content= "Start Survey" />
+                        </StackPanel>
+                </StackPanel>
+                </Grid>
+            </materialDesign:Flipper.FrontContent>
+            <!--#endregion-->
+            
+            <!--#region fliper back-->
+            <materialDesign:Flipper.BackContent>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="1" Text="Disagree" Margin="10"/>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="2" Text="Somewhat Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="3" Text="Neither agree nor Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="4" Text="Somewhat Agree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="5" Text="Agree" Margin="10"/>
+
+                    <ListView Grid.Row="1" Grid.Column="0" x:Name="Questions" Grid.ColumnSpan="6">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                  Margin="8" Width="184" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3"/>
+                </Grid>
+            </materialDesign:Flipper.BackContent>
+            <!--#endregion-->
+        </materialDesign:Flipper>
     </Grid>
 </Window>
