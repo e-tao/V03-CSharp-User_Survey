@@ -1,6 +1,7 @@
 ﻿global using System.Collections.Generic;
 global using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using WebUsers;
 
@@ -22,7 +23,7 @@ namespace Survey
         {
             SurveyModel.DBName = "V03_Survey_Cheng";
             await SurveyModel.CreateDatabase();
-            if (await SurveyModel.GetNumberQuestion()==0)
+            if (await SurveyModel.GetNumberQuestion() == 0)
             {
                 questions.Add("It is easy to navigate through the app.");
                 questions.Add("It is easy to create a new user account.");
@@ -38,13 +39,19 @@ namespace Survey
         {
             InitDB();
 
-            users = await RandomUsers.GetUsers(100);
+            //users = await RandomUsers.GetUsers(100);
             //randomusers.ItemsSource = users;
         }
 
         private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
-            //var questionsFromDb =  await SurveyModel.GetQuestions();
+            var questionsFromDb =  await SurveyModel.GetQuestions();
+
+/*            foreach(var item in questionsFromDb)
+            {
+                Debug.WriteLine(item);
+            }*/
+            Questions.ItemsSource = questionsFromDb;
 
         }
     }

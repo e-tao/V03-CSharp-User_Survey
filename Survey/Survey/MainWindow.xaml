@@ -78,11 +78,10 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="80" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="60" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="160" />
                         <ColumnDefinition Width="90"/>
                         <ColumnDefinition Width="90"/>
                         <ColumnDefinition Width="90"/>
@@ -98,12 +97,28 @@
                     <ListView Grid.Row="1" Grid.Column="0" x:Name="Questions" Grid.ColumnSpan="6">
                         <ListView.ItemTemplate>
                             <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160" />
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Question}" Grid.Column="0" TextWrapping="WrapWithOverflow"/>
+                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="1"  Content="1" HorizontalAlignment="Center"/>
+                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="2"  Content="2" HorizontalAlignment="Center"/>
+                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="3"  Content="3" HorizontalAlignment="Center"/>
+                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="4"  Content="4" HorizontalAlignment="Center"/>
+                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="5"  Content="5" HorizontalAlignment="Center"/>
+                                </Grid>
 
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                     <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                  Margin="8" Width="184" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3"/>
+                  Margin="8" Width="184" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 </Grid>
             </materialDesign:Flipper.BackContent>
             <!--#endregion-->
