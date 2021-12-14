@@ -174,17 +174,17 @@ namespace Survey
             {
                 case "+ 20":
                     PrograssBar.Visibility = Visibility.Visible;
-                    users = await RandomUsers.GetUsers(20);
+                    users = await RandomUsers.GetUsers(rand.Next(20,50));
                     AddRandomResults(users);
                     break;
                 case "+ 50":
                     PrograssBar.Visibility = Visibility.Visible;
-                    users = await RandomUsers.GetUsers(50);
+                    users = await RandomUsers.GetUsers(rand.Next(50,100));
                     AddRandomResults(users);
                     break;
                 case "+100":
                     PrograssBar.Visibility = Visibility.Visible;
-                    users = await RandomUsers.GetUsers(100);
+                    users = await RandomUsers.GetUsers(rand.Next(100, 120));
                     AddRandomResults(users);
                     break;
             }
