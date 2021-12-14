@@ -2,6 +2,7 @@
 global using System.Threading.Tasks;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using WebUsers;
@@ -15,11 +16,11 @@ namespace Survey
         private List<uint> answerList = new();
         private List<uint> questionIdList = new();
         private List<uint> userIdList = new();
+
         private IEnumerable<DBQuestion> questionsFromDb;
+        private ObservableCollection<User> users;
 
         Random rand = new();
-
-        private ObservableCollection<User> users;
 
         private uint userId;
         private string ageGroup;
@@ -51,6 +52,13 @@ namespace Survey
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitDB();
+
+            var tempList = SurveyModel.GetAgeGroupResults();
+
+            foreach(var item in await tempList)
+            {
+                Debug.WriteLine(item);
+            }
         }
 
         private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
