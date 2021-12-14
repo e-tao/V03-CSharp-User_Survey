@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿global using System.Collections.Generic;
+global using System.Threading.Tasks;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
