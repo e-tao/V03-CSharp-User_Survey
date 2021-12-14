@@ -119,18 +119,17 @@ namespace Survey
             return ageGroupList[rand.Next(7)];
         }
 
-        private void RandomAnswer()
+        private void QuestionList()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i <= 5; i++)
             {
-                answerList.Add((uint)(rand.Next(1, 6)));
-                questionIdList.Add((uint)(i + 1));
+                questionIdList.Add((uint)(i));
             }
         }
 
         private async void AddRandomResults(ObservableCollection<User> users)
         {
-            RandomAnswer();
+            QuestionList();
 
             foreach (var user in users)
             {
@@ -139,9 +138,9 @@ namespace Survey
 
             foreach (var userId in userIdList)
             {
-                for (int i = 0; i < answerList.Count; i++)
+                for (int i = 0; i < 5; i++)
                 {
-                    await SurveyModel.AddAnswer(userId, questionIdList[i], answerList[i]);
+                    await SurveyModel.AddAnswer(userId, questionIdList[i], (uint)rand.Next(1,6));
                 }
             }
             PrograssBar.Visibility = Visibility.Hidden;
