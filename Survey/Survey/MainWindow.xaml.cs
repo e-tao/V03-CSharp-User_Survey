@@ -18,6 +18,7 @@ namespace Survey
         private List<uint> userIdList = new();
         private IEnumerable<DBQuestion> questionsFromDb;
 
+        Random rand = new();
 
         private ObservableCollection<User> users;
 
@@ -105,7 +106,6 @@ namespace Survey
 
         private string RandomAgeGroup()
         {
-            Random rand = new();
             List<string> ageGroupList = new()
             {
                 "18-24 years old",
@@ -121,12 +121,34 @@ namespace Survey
 
         }
 
-        private async void AddRandomUser(ObservableCollection<User>  users)
+        private void RandomAnswer()
         {
+            for(int i = 0; i<5; i++)
+            {
+                answerList.Add((uint)(rand.Next(1, 6)));
+                questionIdList.Add((uint)(i + 1));
+            }
+
+        }
+
+        private async void AddRandomResults(ObservableCollection<User>  users)
+        {
+            RandomAnswer();
+
             foreach (var user in users)
             {
                 userIdList.Add(await SurveyModel.AddUser(user.Name.First, user.Name.Last, RandomAgeGroup(), user.Gender, user.Email));
+
             }
+
+            foreach (var userId in userIdList)
+            {
+                for (int i = 0; i < answerList.Count; i++)
+                {
+                    await SurveyModel.AddAnswer(userId, questionIdList[i], answerList[i]);
+                }
+            }
+
             PrograssBar.Visibility = Visibility.Hidden;
         }
 
@@ -140,18 +162,17 @@ namespace Survey
                 case "+ 20":
                     PrograssBar.Visibility = Visibility.Visible;
                     users = await RandomUsers.GetUsers(20);
-                    AddRandomUser(users);
-
+                    AddRandomResults(users);
                     break;
                 case "+ 50":
                     PrograssBar.Visibility = Visibility.Visible;
                     users = await RandomUsers.GetUsers(50);
-                    AddRandomUser(users);
+                    AddRandomResults(users);
                     break;
                 case "+100":
                     PrograssBar.Visibility = Visibility.Visible;
                     users = await RandomUsers.GetUsers(100);
-                    AddRandomUser(users);
+                    AddRandomResults(users);
                     break;
             }
         }
