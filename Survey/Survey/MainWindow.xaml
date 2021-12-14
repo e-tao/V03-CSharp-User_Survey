@@ -72,7 +72,7 @@
                     </StackPanel>
                     
                 <!--survey complete-->
-                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" x:Name="Thanks" Visibility="Hidden" >
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" x:Name="Thanks" Visibility="Hidden"  Orientation="Vertical">
                         <materialDesign:Card UniformCornerRadius="5" Padding="8" Width="300" Background="{StaticResource PrimaryHueMidBrush}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}">
                             <TextBlock Text="Thanks for your time!" HorizontalAlignment="Center" />
                         </materialDesign:Card>
@@ -104,7 +104,16 @@
                 <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="5" Text="Agree" Margin="10"/>
 
                 <ListView Grid.Row="1" Grid.Column="0" x:Name="Questions" Grid.ColumnSpan="6">
-                    <ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="IsSelected" Value="True"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -115,7 +124,7 @@
                                     <ColumnDefinition Width="90"/>
                                     <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Question}" Grid.Column="0" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Text="{Binding Question}" Grid.Column="0" TextWrapping="WrapWithOverflow" Margin="0,6"/>
                                 <RadioButton GroupName="{Binding QuestionId}" Grid.Column="1"  Content="1" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
                                 <RadioButton GroupName="{Binding QuestionId}" Grid.Column="2"  Content="2" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
                                 <RadioButton GroupName="{Binding QuestionId}" Grid.Column="3"  Content="3" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
@@ -133,7 +142,6 @@
         </materialDesign:Flipper>
         
         <!--add random user-->
-
         <StackPanel Orientation="Horizontal">
             <ProgressBar x:Name="PrograssBar" Orientation="Vertical" IsIndeterminate="True" Visibility="Hidden"/>
             <materialDesign:PopupBox VerticalAlignment="Bottom"  Margin="15,20"

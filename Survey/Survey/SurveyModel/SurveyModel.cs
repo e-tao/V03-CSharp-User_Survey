@@ -8,7 +8,7 @@ public class SurveyModel
 
     public static async Task CreateDatabase()
     {
-        using MySqlConnection connection = new("Server=localhost;User ID=root;Password=;");
+        using MySqlConnection connection = new("Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;");
         await connection.OpenAsync();
 
         using MySqlCommand cmdCreateDatabase = new($"CREATE DATABASE IF NOT EXISTS `{DBName}`;", connection);
@@ -32,7 +32,7 @@ public class SurveyModel
 
     public static async Task<uint> GetNumberQuestion()
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         var numQuestion = await new MySqlCommand("SELECT COUNT(*) FROM question;", connection).ExecuteScalarAsync();
@@ -48,51 +48,46 @@ public class SurveyModel
 
     public static async Task<List<int>> GetGenderResults()
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         List<int> genderResults = new();
 
-        var noOfMale = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE gender LIKE 'male';", connection).ExecuteScalarAsync();
-        var noOfFemale = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE gender LIKE 'female';", connection).ExecuteScalarAsync();
+        var gender = new MySqlCommand("SELECT COUNT(*) FROM `user` GROUP BY gender ORDER BY gender desc;", connection);
+        using var res = await gender.ExecuteReaderAsync();
+        while (res.Read())
+        {
+            genderResults.Add(res.GetInt32(0));
+        }
 
-        genderResults.Add(int.Parse(noOfMale.ToString()));
-        genderResults.Add(int.Parse(noOfFemale.ToString()));
 
         return genderResults;
     }
 
     public static async Task<List<int>> GetAgeGroupResults()
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         List<int> ageGroupResults = new();
 
-        var ag1 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '18-24 years old';", connection).ExecuteScalarAsync();
-        var ag2 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '25-34 years old';", connection).ExecuteScalarAsync();
-        var ag3 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '35-44 years old';", connection).ExecuteScalarAsync();
-        var ag4 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '45-54 years old';", connection).ExecuteScalarAsync();
-        var ag5 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '55-64 years old';", connection).ExecuteScalarAsync();
-        var ag6 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '65-74 years old';", connection).ExecuteScalarAsync();
-        var ag7 = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE age_group LIKE '75 years or older';", connection).ExecuteScalarAsync();
+        var ag = new MySqlCommand("SELECT COUNT(*) FROM `user` GROUP BY age_group;", connection);
+        using var res = await ag.ExecuteReaderAsync();
 
-        ageGroupResults.Add(int.Parse(ag1.ToString()));
-        ageGroupResults.Add(int.Parse(ag2.ToString()));
-        ageGroupResults.Add(int.Parse(ag3.ToString()));
-        ageGroupResults.Add(int.Parse(ag4.ToString()));
-        ageGroupResults.Add(int.Parse(ag5.ToString()));
-        ageGroupResults.Add(int.Parse(ag6.ToString()));
-        ageGroupResults.Add(int.Parse(ag7.ToString()));
 
-        return ageGroupResults; 
+        while (res.Read())
+        {
+            ageGroupResults.Add(res.GetInt32(0));
+        }
+            
+         return ageGroupResults; 
     }
 
 
 
     public static async Task AddQuestions(IEnumerable<string> questions)
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
 
@@ -107,7 +102,7 @@ public class SurveyModel
 
     public static async Task<uint> AddUser(string first, string last, string age_group, string gender, string email)
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`user` (`first_name`, `last_name`, `age_group`, `gender`, `email`) VALUES(@first, @last, @age_group, @gender, @email);", connection);
@@ -124,7 +119,7 @@ public class SurveyModel
 
     public static async Task<uint> AddAnswer(uint userId, uint questionId, uint answer)
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`answer` (`userID`, `questionID`, `answer`) VALUES(@userId, @questionId, @answer);", connection);
@@ -140,7 +135,7 @@ public class SurveyModel
 
     public static async Task<IEnumerable<DBQuestion>> GetQuestions()
     {
-        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
         var q = new MySqlCommand("SELECT questionID, question from question;", connection);
@@ -152,10 +147,8 @@ public class SurveyModel
         {
             questions.Add(new DBQuestion { QuestionId = res.GetUInt32(0), Question = res.GetString(1) });
         }
-
         return questions;
     }
-
 }
 
 public class DBQuestion

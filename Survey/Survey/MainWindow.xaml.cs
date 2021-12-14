@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using WebUsers;
+using System.Linq;
 
 
 namespace Survey
@@ -13,7 +14,8 @@ namespace Survey
     public partial class MainWindow : Window
     {
         private List<string> questions = new();
-        private List<uint> answerList = new();
+        private Dictionary<string, uint> questionAnswerPair = new();
+
         private List<uint> questionIdList = new();
         private List<uint> userIdList = new();
 
@@ -25,7 +27,7 @@ namespace Survey
         private uint userId;
         private string ageGroup;
         private string gender;
-        private uint answer;
+        //private uint answer;
 
 
         public MainWindow()
@@ -52,33 +54,36 @@ namespace Survey
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitDB();
-
-            var tempList = SurveyModel.GetAgeGroupResults();
-
-            foreach(var item in await tempList)
-            {
-                Debug.WriteLine(item);
-            }
         }
 
         private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
             questionsFromDb = await SurveyModel.GetQuestions();
-            foreach (var question in questionsFromDb)
-            {
-                questionIdList.Add(question.QuestionId);
-            }
-
             Questions.ItemsSource = questionsFromDb;
         }
 
         private void BtnSaveSurvey_Click(object sender, RoutedEventArgs e)
         {
-            if (answerList.Count == 5)
+
+            // return the questionId in the order the questions were answered.
+            // so when writing into database the question and answer pair is preserved.
+
+            foreach(var keyValuePair in questionAnswerPair)
             {
-                for (int i = 0; i < answerList.Count; i++)
+                foreach(var question in questionsFromDb)
                 {
-                    SurveyModel.AddAnswer(userId, questionIdList[i], answerList[i]);
+                    if (keyValuePair.Key.Equals(question.ToString()))
+                    {
+                        questionIdList.Add(question.QuestionId);
+                    }
+                }
+            }
+
+            if (questionIdList.Count == 5)
+            {
+                for (int i = 0; i < questionIdList.Count; i++)
+                {
+                    SurveyModel.AddAnswer(userId, questionIdList[i], questionAnswerPair.ElementAt(i).Value);
                 }
             }
 
@@ -107,8 +112,21 @@ namespace Survey
         private void RbAnswers_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            answer = uint.Parse(rb.Content.ToString());
-            answerList.Add(answer);
+            var seledted = Questions.SelectedItem.ToString();
+
+            if (questionAnswerPair.ContainsKey(seledted))
+            {
+                questionAnswerPair.Remove(seledted);
+            }
+
+            questionAnswerPair.Add(Questions.SelectedItem.ToString(), uint.Parse(rb.Content.ToString()));
+
+
+/*            foreach (var keyvaluepair in questionAnswerPair)
+            {
+                Debug.Write(keyvaluepair.Key + " ");
+                Debug.WriteLine(keyvaluepair.Value);
+            }*/
         }
 
         private string RandomAgeGroup()
@@ -127,17 +145,12 @@ namespace Survey
             return ageGroupList[rand.Next(7)];
         }
 
-        private void QuestionList()
+        private async void AddRandomResults(ObservableCollection<User> users)
         {
             for (int i = 1; i <= 5; i++)
             {
                 questionIdList.Add((uint)(i));
             }
-        }
-
-        private async void AddRandomResults(ObservableCollection<User> users)
-        {
-            QuestionList();
 
             foreach (var user in users)
             {
@@ -153,8 +166,6 @@ namespace Survey
             }
             PrograssBar.Visibility = Visibility.Hidden;
         }
-
-
 
         private async void BtnAddRandomUser_Click(object sender, RoutedEventArgs e)
         {
