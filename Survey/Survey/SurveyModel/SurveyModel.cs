@@ -21,7 +21,7 @@ public class SurveyModel
 
         await new MySqlCommand($"USE `{DBName}`;", connection).ExecuteNonQueryAsync();
 
-        await new MySqlCommand("CREATE TABLE IF NOT EXISTS user(userID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,`first_name` VARCHAR(25) NOT NULL,`last_name` VARCHAR(25),`age` INT UNSIGNED,`sex` VARCHAR(18),`height` INT UNSIGNED);", connection).ExecuteNonQueryAsync();
+        await new MySqlCommand("CREATE TABLE IF NOT EXISTS user(userID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,`first_name` VARCHAR(25) NOT NULL,`last_name` VARCHAR(25) NOT NULL,`age_group` VARCHAR(30) NOT NULL,`gender` VARCHAR(10) NOT NULL,`email` VARCHAR(128) NOT NULL);", connection).ExecuteNonQueryAsync();
 
         await new MySqlCommand("CREATE TABLE IF NOT EXISTS question(questionID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,`question` TEXT NOT NULL);", connection).ExecuteNonQueryAsync();
 
@@ -66,17 +66,17 @@ public class SurveyModel
     }
 
 
-    public static async Task<uint> AddUser(string first, string last, uint age, string gender, float height)
+    public static async Task<uint> AddUser(string first, string last, string age_group, string gender, string email)
     {
         using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
         await connection.OpenAsync();
 
-        var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`user` (`first_name`, `last_name`, `age`, `sex`, `height`) VALUES(@first, @last, @age, @sex, @height);", connection);
+        var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`user` (`first_name`, `last_name`, `age_group`, `gender`, `email`) VALUES(@first, @last, @age_group, @gender, @email);", connection);
         cmd.Parameters.AddWithValue("first", first);
         cmd.Parameters.AddWithValue("last", last);
-        cmd.Parameters.AddWithValue("age", age);
-        cmd.Parameters.AddWithValue("sex", gender);
-        cmd.Parameters.AddWithValue("height", height);
+        cmd.Parameters.AddWithValue("age_group", age_group);
+        cmd.Parameters.AddWithValue("gender", gender);
+        cmd.Parameters.AddWithValue("email", email);
         await cmd.ExecuteNonQueryAsync();
 
         return (uint)cmd.LastInsertedId;
