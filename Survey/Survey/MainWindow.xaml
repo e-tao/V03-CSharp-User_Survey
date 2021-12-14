@@ -22,8 +22,10 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
         <!--#endregion-->
-        
+
+       
         <!--#region flipper front-->
         <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged">
             <materialDesign:Flipper.FrontContent>
@@ -79,55 +81,73 @@
             </materialDesign:Flipper.FrontContent>
             <!--#endregion-->
             
-            <!--#region fliper back-->
-            <materialDesign:Flipper.BackContent>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="80" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="60" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160" />
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="90"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="1" Text="Disagree" Margin="10"/>
-                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="2" Text="Somewhat Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
-                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="3" Text="Neither agree nor Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
-                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="4" Text="Somewhat Agree" Margin="10" TextWrapping="WrapWithOverflow"/>
-                    <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="5" Text="Agree" Margin="10"/>
+        <!--#region fliper back-->
+        <materialDesign:Flipper.BackContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="1" Text="Disagree" Margin="10"/>
+                <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="2" Text="Somewhat Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="3" Text="Neither agree nor Disagree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="4" Text="Somewhat Agree" Margin="10" TextWrapping="WrapWithOverflow"/>
+                <TextBlock Grid.Row="0" TextAlignment="Center" Grid.Column="5" Text="Agree" Margin="10"/>
 
-                    <ListView Grid.Row="1" Grid.Column="0" x:Name="Questions" Grid.ColumnSpan="6">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="160" />
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition Width="90"/>
-                                        <ColumnDefinition Width="90"/>
-                                        <ColumnDefinition Width="90"/>
-                                        <ColumnDefinition Width="80"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Question}" Grid.Column="0" TextWrapping="WrapWithOverflow"/>
-                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="1"  Content="1" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
-                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="2"  Content="2" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
-                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="3"  Content="3" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
-                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="4"  Content="4" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
-                                    <RadioButton GroupName="{Binding QuestionId}" Grid.Column="5"  Content="5" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
-                                </Grid>
+                <ListView Grid.Row="1" Grid.Column="0" x:Name="Questions" Grid.ColumnSpan="6">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160" />
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Question}" Grid.Column="0" TextWrapping="WrapWithOverflow"/>
+                                <RadioButton GroupName="{Binding QuestionId}" Grid.Column="1"  Content="1" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
+                                <RadioButton GroupName="{Binding QuestionId}" Grid.Column="2"  Content="2" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
+                                <RadioButton GroupName="{Binding QuestionId}" Grid.Column="3"  Content="3" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
+                                <RadioButton GroupName="{Binding QuestionId}" Grid.Column="4"  Content="4" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
+                                <RadioButton GroupName="{Binding QuestionId}" Grid.Column="5"  Content="5" HorizontalAlignment="Center" Checked="RbAnswers_Checked"/>
+                            </Grid>
 
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="8" Width="120" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BtnSaveSurvey_Click"/>
-                </Grid>
-            </materialDesign:Flipper.BackContent>
-            <!--#endregion-->
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="8" Width="120" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BtnSaveSurvey_Click"/>
+            </Grid>
+        </materialDesign:Flipper.BackContent>
+        <!--#endregion-->
         </materialDesign:Flipper>
+        
+        <!--add random user-->
+
+        <StackPanel Orientation="Horizontal">
+            <ProgressBar x:Name="PrograssBar" Orientation="Vertical" IsIndeterminate="True" Visibility="Hidden"/>
+            <materialDesign:PopupBox VerticalAlignment="Bottom"  Margin="15,20"
+              Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+              PlacementMode="TopAndAlignCentres"
+              ToolTipService.Placement="Right"
+              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+            <StackPanel>
+                <Button ToolTip="Add 20 Random users and their survey results" Content="+ 20" Click="BtnAddRandomUser_Click"/>
+                <Button ToolTip="Add 50 Random users and their survey results" Content="+ 50" Click="BtnAddRandomUser_Click"/>
+                <Button ToolTip="Add 50 Random users and their survey results" Content="+100" Click="BtnAddRandomUser_Click"/>
+            </StackPanel>
+        </materialDesign:PopupBox>
+        </StackPanel>
     </Grid>
 </Window>

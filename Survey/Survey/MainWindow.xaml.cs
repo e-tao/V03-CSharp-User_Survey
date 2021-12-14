@@ -1,5 +1,6 @@
 ﻿global using System.Collections.Generic;
 global using System.Threading.Tasks;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace Survey
         private List<string> questions = new();
         private List<uint> answerList = new();
         private List<uint> questionIdList = new();
+        private List<uint> userIdList = new();
         private IEnumerable<DBQuestion> questionsFromDb;
 
 
@@ -49,9 +51,6 @@ namespace Survey
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitDB();
-
-            //users = await RandomUsers.GetUsers(100);
-            //randomusers.ItemsSource = users;
         }
 
         private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
@@ -102,6 +101,59 @@ namespace Survey
             RadioButton rb = sender as RadioButton ;
             answer = uint.Parse(rb.Content.ToString());
             answerList.Add(answer);
+        }
+
+        private string RandomAgeGroup()
+        {
+            Random rand = new();
+            List<string> ageGroupList = new()
+            {
+                "18-24 years old",
+                "25-34 years old",
+                "35-44 years old",
+                "45-54 years old",
+                "55-64 years old",
+                "65-74 years old",
+                "75 years or older"
+            };
+
+            return ageGroupList[rand.Next(7)];
+
+        }
+
+        private async void AddRandomUser(ObservableCollection<User>  users)
+        {
+            foreach (var user in users)
+            {
+                userIdList.Add(await SurveyModel.AddUser(user.Name.First, user.Name.Last, RandomAgeGroup(), user.Gender, user.Email));
+            }
+            PrograssBar.Visibility = Visibility.Hidden;
+        }
+
+
+
+        private async void BtnAddRandomUser_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            switch (button.Content.ToString())
+            {
+                case "+ 20":
+                    PrograssBar.Visibility = Visibility.Visible;
+                    users = await RandomUsers.GetUsers(20);
+                    AddRandomUser(users);
+
+                    break;
+                case "+ 50":
+                    PrograssBar.Visibility = Visibility.Visible;
+                    users = await RandomUsers.GetUsers(50);
+                    AddRandomUser(users);
+                    break;
+                case "+100":
+                    PrograssBar.Visibility = Visibility.Visible;
+                    users = await RandomUsers.GetUsers(100);
+                    AddRandomUser(users);
+                    break;
+            }
         }
     }
 }
