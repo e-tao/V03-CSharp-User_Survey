@@ -1,8 +1,7 @@
-﻿global using System.Collections.Generic;
-global using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using WebUsers;
@@ -57,7 +56,7 @@ namespace Survey
         private async void Flipper_IsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
         {
             questionsFromDb = await SurveyModel.GetQuestions();
-            foreach(var question in questionsFromDb)
+            foreach (var question in questionsFromDb)
             {
                 questionIdList.Add(question.QuestionId);
             }
@@ -99,7 +98,7 @@ namespace Survey
 
         private void RbAnswers_Checked(object sender, RoutedEventArgs e)
         {
-            RadioButton rb = sender as RadioButton ;
+            RadioButton rb = sender as RadioButton;
             answer = uint.Parse(rb.Content.ToString());
             answerList.Add(answer);
         }
@@ -118,27 +117,24 @@ namespace Survey
             };
 
             return ageGroupList[rand.Next(7)];
-
         }
 
         private void RandomAnswer()
         {
-            for(int i = 0; i<5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 answerList.Add((uint)(rand.Next(1, 6)));
                 questionIdList.Add((uint)(i + 1));
             }
-
         }
 
-        private async void AddRandomResults(ObservableCollection<User>  users)
+        private async void AddRandomResults(ObservableCollection<User> users)
         {
             RandomAnswer();
 
             foreach (var user in users)
             {
                 userIdList.Add(await SurveyModel.AddUser(user.Name.First, user.Name.Last, RandomAgeGroup(), user.Gender, user.Email));
-
             }
 
             foreach (var userId in userIdList)
@@ -148,7 +144,6 @@ namespace Survey
                     await SurveyModel.AddAnswer(userId, questionIdList[i], answerList[i]);
                 }
             }
-
             PrograssBar.Visibility = Visibility.Hidden;
         }
 
