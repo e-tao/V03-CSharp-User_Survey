@@ -52,14 +52,11 @@ public class SurveyModel
         await connection.OpenAsync();
 
         List<int> genderResults = new();
+        var noOfMale = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE gender LIKE 'male';", connection).ExecuteScalarAsync();
+        var noOfFemale = await new MySqlCommand("SELECT COUNT(*) FROM user WHERE gender LIKE 'female';", connection).ExecuteScalarAsync();
 
-        var gender = new MySqlCommand("SELECT COUNT(*) FROM `user` GROUP BY gender ORDER BY gender desc;", connection);
-        using var res = await gender.ExecuteReaderAsync();
-        while (res.Read())
-        {
-            genderResults.Add(res.GetInt32(0));
-        }
-
+        genderResults.Add(int.Parse(noOfMale.ToString()));
+        genderResults.Add(int.Parse(noOfFemale.ToString()));
 
         return genderResults;
     }
@@ -81,6 +78,22 @@ public class SurveyModel
         }
             
          return ageGroupResults; 
+    }
+
+    public static async Task<List<int>> GetSatisfiedAndDissatisfiedCustomer()
+    {
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        await connection.OpenAsync();
+        
+        var satisfiedUser = await new MySqlCommand("SELECT COUNT(*) FROM answer WHERE questionID = 4 AND `answer` > 3;", connection).ExecuteScalarAsync();
+        var dissatisfiedUser = await new MySqlCommand("SELECT COUNT(*) FROM answer WHERE questionID = 4 AND `answer` < 3;", connection).ExecuteScalarAsync();
+        var totalUsers = await new MySqlCommand("SELECT COUNT(*) FROM user;", connection).ExecuteScalarAsync();
+
+        List<int> userList = new();
+        userList.Add((int)(long)satisfiedUser);
+        userList.Add((int)(long)dissatisfiedUser);
+        userList.Add((int)(long)totalUsers);
+        return userList;
     }
 
 
@@ -150,8 +163,6 @@ public class SurveyModel
         return questions;
     }
 
-
-    //DELETE FROM `v03_survey_cheng`.`user` WHERE  `userID`=120;
 
     public static async void RemoveInvalidUser(uint userId)
     {

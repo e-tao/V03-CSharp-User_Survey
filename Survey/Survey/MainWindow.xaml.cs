@@ -94,7 +94,7 @@ namespace Survey
             AddUserLeft.Visibility = Visibility.Hidden;
             AddUserRight.Visibility = Visibility.Hidden;
             Thanks.Visibility = Visibility.Visible;
-            Results.IsEnabled = true;
+            BtnResults.IsEnabled = true;
         }
 
         private async void BtnSaveUser_Click(object sender, RoutedEventArgs e)
@@ -193,50 +193,70 @@ namespace Survey
                     AddRandomResults(users);
                     break;
             }
-            Results.IsEnabled = true;
-
+            BtnResults.IsEnabled = true;
         }
 
         private async void BtnResults_Click(object sender, RoutedEventArgs e)
         {
             FlipperView.Visibility = Visibility.Hidden;
+ 
 
             var genderResults = await SurveyModel.GetGenderResults();
             var ageGroupResults = await SurveyModel.GetAgeGroupResults();
+            var userList = await SurveyModel.GetSatisfiedAndDissatisfiedCustomer(); //user list contains 3 numbers in the order of satisfy/dissatisfy/totaluser number
 
             List<Rectangle> rectangleList = new();
             List<TextBlock> rectangleListText = new();
 
-            //Gender card
-            int total = 0;
-            foreach(var count in genderResults)
+
+            if (genderResults.Count > 0)
             {
-                total += count;
+                ResultGrid.Visibility = Visibility.Visible;
+
+                //Gender card
+                int total = 0;
+                foreach (var count in genderResults)
+                {
+                    total += count;
+                }
+
+                Participants.Text = total.ToString();
+                mParticipant.Text = genderResults[0].ToString();
+                fParticipant.Text = genderResults[1].ToString();
+
+                //Age group card
+                rectangleList.AddRange(new List<Rectangle>
+                {
+                    ag1,ag2,ag3,ag4,ag5,ag6,ag7
+                });
+
+                rectangleListText.AddRange(new List<TextBlock>
+                {
+                    ag1Txt,ag2Txt,ag3Txt,ag4Txt,ag5Txt,ag6Txt,ag7Txt
+                });
+
+
+                for (int i = 0; i < ageGroupResults.Count; i++)
+                {
+                    rectangleList[i].Height = ageGroupResults[i];
+                    rectangleListText[i].Text = ageGroupResults[i].ToString();
+                }
+
+                //Satisfied customer card
+                var satisfied =Math.Round((userList[0]*100/(double)userList[2]),2);
+                Satisfied.Text = userList[0].ToString();
+                SatisfiedRate.Text = satisfied.ToString();
+
+                //Dissatisfied customer card
+                var dissatisfied =Math.Round((userList[1]*100/(double)userList[2]),2);
+                Dissatisfied.Text = userList[1].ToString();
+                DisatisfiedRate.Text = dissatisfied.ToString();
+
             }
-
-            Participants.Text = total.ToString();
-            mParticipant.Text = genderResults[0].ToString();
-            fParticipant.Text = genderResults[1].ToString();
-
-            //Age group card
-            rectangleList.AddRange(new List<Rectangle>
+            else
             {
-                ag1,ag2,ag3,ag4,ag5,ag6,ag7
-            });
-
-            rectangleListText.AddRange(new List<TextBlock>
-            {
-                ag1Txt,ag2Txt,ag3Txt,ag4Txt,ag5Txt,ag6Txt,ag7Txt
-            });
-
-
-            for (int i = 0; i < ageGroupResults.Count; i++)
-            {
-                rectangleList[i].Height = ageGroupResults[i];
-                rectangleListText[i].Text = ageGroupResults[i].ToString();
+                NoResult.Visibility = Visibility.Visible;
             }
-
-
         }
     }
 }

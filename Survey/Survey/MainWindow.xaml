@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Survey"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded"
+        Title="FireRnR App Customer Satisfaction Survey" Height="450" Width="800" Loaded="Window_Loaded"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -25,7 +25,11 @@
         <!--#endregion-->
         
         <!--#region result view-->
-        <Grid Grid.Column="1">
+        <Grid x:Name="NoResult" Visibility="Hidden" Grid.Column="1">
+            <TextBlock Text="No Results Found" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid x:Name="ResultGrid" Grid.Column="1" Visibility="Hidden" d:Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -107,21 +111,54 @@
                     <TextBlock Grid.Column="5" Grid.Row="2" Text="65-74" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
                     <TextBlock Grid.Column="6" Grid.Row="2" Text="75 + " VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
                 </Grid>
-
             </materialDesign:Card>
 
+            <!--card satisfied-->
             <materialDesign:Card Grid.Column="0" Grid.Row="1"
               Background="{DynamicResource SecondaryHueMidBrush}"
               Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
               Margin="10" Padding="8" UniformCornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="Trophy" Width="100" Height="100" HorizontalAlignment="Center" Grid.RowSpan="2"/>
+                    <TextBlock Text="Satisfied Customers" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource MaterialDesignHeadline5TextBlock}" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock x:Name="Satisfied" Grid.Column="1" Grid.Row="0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock  Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run x:Name="SatisfiedRate"/><Run Text=" %" />
+                    </TextBlock>
+                </Grid>
             </materialDesign:Card>
             
+            <!--card dissatisfied-->
             <materialDesign:Card Grid.Column="1" Grid.Row="1"
               Background="{DynamicResource PrimaryHueMidBrush}"
               Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
               Margin="10" Padding="8" UniformCornerRadius="10">
-            </materialDesign:Card>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="EmojiSadOutline" Width="80" Height="80" HorizontalAlignment="Center" />
+                    <TextBlock Text="Sad Customers" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource MaterialDesignHeadline5TextBlock}" TextWrapping="WrapWithOverflow"/>
+                    <TextBlock x:Name="Dissatisfied" Grid.Column="1" Grid.Row="0" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock  Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Run x:Name="DisatisfiedRate"/><Run Text=" %" />
+                    </TextBlock>
+                </Grid>
 
+            </materialDesign:Card>
         </Grid>
         <!--#endregion-->
         
@@ -243,16 +280,13 @@
         <!--add random user and result button-->
         <StackPanel Orientation="Horizontal">
             <ProgressBar x:Name="PrograssBar" Orientation="Vertical" IsIndeterminate="True" Visibility="Hidden"/>
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-            
-                    <Button x:Name="Results" Content="{materialDesign:PackIcon Kind=Analytics}" Margin="5,15" Grid.Row="0" IsEnabled="True" Click="BtnResults_Click"/>
-
+                    <Button x:Name="BtnResults" Content="{materialDesign:PackIcon Kind=Analytics}" Margin="5,15" Grid.Row="0" IsEnabled="False" Click="BtnResults_Click"/>
                     <materialDesign:PopupBox Margin="15,20" Grid.Row="2"
                       Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                       PlacementMode="TopAndAlignCentres"

@@ -20,4 +20,10 @@
     <ProjectReference Include="..\RandomUser\RandomUsers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="images\satisfied.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
