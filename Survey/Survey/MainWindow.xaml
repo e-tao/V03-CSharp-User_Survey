@@ -22,12 +22,110 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
         <!--#endregion-->
+        
+        <!--#region result view-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
-       
+            <materialDesign:Card Grid.Column="0" Grid.Row="0"
+              Background="{DynamicResource PrimaryHueLightBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Margin="10" Padding="8" UniformCornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignHeadline5TextBlock}">
+                        Total Paticipants <Run x:Name="Participants" />
+                    </TextBlock>
+                    <materialDesign:PackIcon Kind="GenderMale" Grid.Column="0" Grid.Row="1" Width="60" Height="60" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignHeadline5TextBlock}" x:Name="mParticipant" VerticalAlignment="Top" />
+                    <materialDesign:PackIcon Kind="GenderFemale" Grid.Column="2" Grid.Row="1" Width="60" Height="60" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" Style="{StaticResource MaterialDesignHeadline5TextBlock}" x:Name="fParticipant" VerticalAlignment="Top"/>
+                </Grid>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Column="1" Grid.Row="0"
+              Background="{DynamicResource MaterialDesignBodyLight}"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Margin="10" Padding="8" UniformCornerRadius="10">
+
+                <Grid x:Name="AgeGroups">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="ag1Txt" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag2Txt" Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag3Txt" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag4Txt" Grid.Column="3" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag5Txt" Grid.Column="4" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag6Txt" Grid.Column="5" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="ag7Txt" Grid.Column="6" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+
+                    <Rectangle x:Name="ag1" Grid.Column="0" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag2" Grid.Column="1" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag3" Grid.Column="2" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag4" Grid.Column="3" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag5" Grid.Column="4" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag6" Grid.Column="5" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+                    <Rectangle x:Name="ag7" Grid.Column="6" Grid.Row="1" Width="20" Fill="{StaticResource MaterialDesignDarkForeground}" VerticalAlignment="Bottom"/>
+
+
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="18-24" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="25-34" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="2" Text="35-44" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="3" Grid.Row="2" Text="45-54" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="4" Grid.Row="2" Text="55-64" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="5" Grid.Row="2" Text="65-74" VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                    <TextBlock Grid.Column="6" Grid.Row="2" Text="75 + " VerticalAlignment="Bottom" ><TextBlock.RenderTransform><RotateTransform Angle="-45"/></TextBlock.RenderTransform></TextBlock>
+                </Grid>
+
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Column="0" Grid.Row="1"
+              Background="{DynamicResource SecondaryHueMidBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Margin="10" Padding="8" UniformCornerRadius="10">
+            </materialDesign:Card>
+            
+            <materialDesign:Card Grid.Column="1" Grid.Row="1"
+              Background="{DynamicResource PrimaryHueMidBrush}"
+              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+              Margin="10" Padding="8" UniformCornerRadius="10">
+            </materialDesign:Card>
+
+        </Grid>
+        <!--#endregion-->
+        
         <!--#region flipper front-->
-        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged">
+        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged" d:Visibility="hidden" x:Name="FlipperView">
             <materialDesign:Flipper.FrontContent>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -141,21 +239,32 @@
         <!--#endregion-->
         </materialDesign:Flipper>
         
-        <!--add random user-->
+        <!--add random user and result button-->
         <StackPanel Orientation="Horizontal">
             <ProgressBar x:Name="PrograssBar" Orientation="Vertical" IsIndeterminate="True" Visibility="Hidden"/>
-            <materialDesign:PopupBox VerticalAlignment="Bottom"  Margin="15,20"
-              Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-              PlacementMode="TopAndAlignCentres"
-              ToolTipService.Placement="Right"
-              ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
-              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-            <StackPanel>
-                <Button ToolTip="Add 20 Random users and their survey results" Content="+ 20" Click="BtnAddRandomUser_Click"/>
-                <Button ToolTip="Add 50 Random users and their survey results" Content="+ 50" Click="BtnAddRandomUser_Click"/>
-                <Button ToolTip="Add 50 Random users and their survey results" Content="+100" Click="BtnAddRandomUser_Click"/>
-            </StackPanel>
-        </materialDesign:PopupBox>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+            
+                    <Button x:Name="Results" Content="{materialDesign:PackIcon Kind=Analytics}" Margin="5,15" Grid.Row="0" IsEnabled="True" Click="BtnResults_Click"/>
+
+                    <materialDesign:PopupBox Margin="15,20" Grid.Row="2"
+                      Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                      PlacementMode="TopAndAlignCentres"
+                      ToolTipService.Placement="Right"
+                      ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionPopupBox"
+                      IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                        <StackPanel>
+                            <Button ToolTip="Add 20 Random users and their survey results" Content="+ 20" Click="BtnAddRandomUser_Click"/>
+                            <Button ToolTip="Add 50 Random users and their survey results" Content="+ 50" Click="BtnAddRandomUser_Click"/>
+                            <Button ToolTip="Add 50 Random users and their survey results" Content="+100" Click="BtnAddRandomUser_Click"/>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

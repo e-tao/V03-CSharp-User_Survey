@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WebUsers;
 using System.Linq;
-
+using System.Windows.Shapes;
 
 namespace Survey
 {
@@ -27,13 +27,13 @@ namespace Survey
         private uint userId;
         private string ageGroup;
         private string gender;
-        //private uint answer;
-
 
         public MainWindow()
         {
             InitializeComponent();
+
         }
+
 
         private async Task InitDB()
         {
@@ -90,6 +90,7 @@ namespace Survey
             AddUserLeft.Visibility = Visibility.Hidden;
             AddUserRight.Visibility = Visibility.Hidden;
             Thanks.Visibility = Visibility.Visible;
+            Results.IsEnabled = true;
         }
 
         private async void BtnSaveUser_Click(object sender, RoutedEventArgs e)
@@ -188,6 +189,50 @@ namespace Survey
                     AddRandomResults(users);
                     break;
             }
+            Results.IsEnabled = true;
+
+        }
+
+        private async void BtnResults_Click(object sender, RoutedEventArgs e)
+        {
+            FlipperView.Visibility = Visibility.Hidden;
+
+            var genderResults = await SurveyModel.GetGenderResults();
+            var ageGroupResults = await SurveyModel.GetAgeGroupResults();
+
+            List<Rectangle> rectangleList = new();
+            List<TextBlock> rectangleListText = new();
+
+            //Gender card
+            int total = 0;
+            foreach(var count in genderResults)
+            {
+                total += count;
+            }
+
+            Participants.Text = total.ToString();
+            mParticipant.Text = genderResults[0].ToString();
+            fParticipant.Text = genderResults[1].ToString();
+
+            //Age group card
+            rectangleList.AddRange(new List<Rectangle>
+            {
+                ag1,ag2,ag3,ag4,ag5,ag6,ag7
+            });
+
+            rectangleListText.AddRange(new List<TextBlock>
+            {
+                ag1Txt,ag2Txt,ag3Txt,ag4Txt,ag5Txt,ag6Txt,ag7Txt
+            });
+
+
+            for (int i = 0; i < ageGroupResults.Count; i++)
+            {
+                rectangleList[i].Height = ageGroupResults[i];
+                rectangleListText[i].Text = ageGroupResults[i].ToString();
+            }
+
+
         }
     }
 }
