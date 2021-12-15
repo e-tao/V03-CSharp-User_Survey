@@ -8,7 +8,7 @@ public class SurveyModel
 
     public static async Task CreateDatabase()
     {
-        using MySqlConnection connection = new("Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;");
+        using MySqlConnection connection = new("Server=localhost;User ID=root;Password=;");
         await connection.OpenAsync();
 
         using MySqlCommand cmdCreateDatabase = new($"CREATE DATABASE IF NOT EXISTS `{DBName}`;", connection);
@@ -32,7 +32,7 @@ public class SurveyModel
 
     public static async Task<uint> GetNumberQuestion()
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         var numQuestion = await new MySqlCommand("SELECT COUNT(*) FROM question;", connection).ExecuteScalarAsync();
@@ -48,7 +48,7 @@ public class SurveyModel
 
     public static async Task<List<int>> GetGenderResults()
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         List<int> genderResults = new();
@@ -66,7 +66,7 @@ public class SurveyModel
 
     public static async Task<List<int>> GetAgeGroupResults()
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         List<int> ageGroupResults = new();
@@ -87,7 +87,7 @@ public class SurveyModel
 
     public static async Task AddQuestions(IEnumerable<string> questions)
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
 
@@ -102,7 +102,7 @@ public class SurveyModel
 
     public static async Task<uint> AddUser(string first, string last, string age_group, string gender, string email)
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`user` (`first_name`, `last_name`, `age_group`, `gender`, `email`) VALUES(@first, @last, @age_group, @gender, @email);", connection);
@@ -119,7 +119,7 @@ public class SurveyModel
 
     public static async Task<uint> AddAnswer(uint userId, uint questionId, uint answer)
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         var cmd = new MySqlCommand($"INSERT INTO `{DBName}`.`answer` (`userID`, `questionID`, `answer`) VALUES(@userId, @questionId, @answer);", connection);
@@ -135,7 +135,7 @@ public class SurveyModel
 
     public static async Task<IEnumerable<DBQuestion>> GetQuestions()
     {
-        using MySqlConnection connection = new($"Server=192.168.1.15;User ID=ethan;Password=w8Q1Ji8I23s2r4YIsocemabAb5nEQo;DataBase={DBName}");
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
         await connection.OpenAsync();
 
         var q = new MySqlCommand("SELECT questionID, question from question;", connection);
@@ -148,6 +148,18 @@ public class SurveyModel
             questions.Add(new DBQuestion { QuestionId = res.GetUInt32(0), Question = res.GetString(1) });
         }
         return questions;
+    }
+
+
+    //DELETE FROM `v03_survey_cheng`.`user` WHERE  `userID`=120;
+
+    public static async void RemoveInvalidUser(uint userId)
+    {
+        using MySqlConnection connection = new($"Server=localhost;User ID=root;Password=;DataBase={DBName}");
+        await connection.OpenAsync();
+
+        var cmd = new MySqlCommand($"DELETE FROM `user` WHERE  `userID`={userId};", connection);
+        await cmd.ExecuteNonQueryAsync();
     }
 }
 

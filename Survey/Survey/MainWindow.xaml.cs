@@ -86,6 +86,10 @@ namespace Survey
                     SurveyModel.AddAnswer(userId, questionIdList[i], questionAnswerPair.ElementAt(i).Value);
                 }
             }
+            else
+            {
+                SurveyModel.RemoveInvalidUser(userId);
+            }
 
             AddUserLeft.Visibility = Visibility.Hidden;
             AddUserRight.Visibility = Visibility.Hidden;
