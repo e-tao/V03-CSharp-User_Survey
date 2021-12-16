@@ -29,7 +29,7 @@
             <TextBlock Text="No Results Found" Style="{StaticResource MaterialDesignHeadline4TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid x:Name="ResultGrid" Grid.Column="1" Visibility="Hidden" d:Visibility="Visible">
+        <Grid x:Name="ResultGrid" Grid.Column="1" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -163,7 +163,7 @@
         <!--#endregion-->
         
         <!--#region flipper front-->
-        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged" d:Visibility="hidden" x:Name="FlipperView">
+        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Grid.Column="1" IsFlippedChanged="Flipper_IsFlippedChanged" x:Name="FlipperView">
             <materialDesign:Flipper.FrontContent>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -215,7 +215,7 @@
                     </StackPanel>
                 </Grid>
             </materialDesign:Flipper.FrontContent>
-            <!--#endregion-->
+        <!--#endregion-->
             
         <!--#region fliper back-->
         <materialDesign:Flipper.BackContent>
@@ -274,10 +274,10 @@
                 <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}" Margin="8" Width="120" Content="SUBMIT" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Click="BtnSaveSurvey_Click"/>
             </Grid>
         </materialDesign:Flipper.BackContent>
-        <!--#endregion-->
         </materialDesign:Flipper>
+        <!--#endregion-->
         
-        <!--add random user and result button-->
+        <!--region add random user and result button-->
         <StackPanel Orientation="Horizontal">
             <ProgressBar x:Name="PrograssBar" Orientation="Vertical" IsIndeterminate="True" Visibility="Hidden"/>
             <Grid>
@@ -301,5 +301,6 @@
                     </materialDesign:PopupBox>
             </Grid>
         </StackPanel>
+        <!--#endregion-->
     </Grid>
 </Window>

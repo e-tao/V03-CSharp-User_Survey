@@ -31,7 +31,6 @@ namespace Survey
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
 
